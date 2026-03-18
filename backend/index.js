@@ -11,7 +11,10 @@ import userRouter from "./routes/user.routes.js"
 const app = express()
 
 app.use(cors({
-  origin: ["http://localhost:5173","https://virtualassistant-bjti.onrender.com"],
+  origin: [
+    "http://localhost:5173",
+    "https://virtualassistant-bjti.onrender.com"
+  ],
   credentials: true
 }))
 
