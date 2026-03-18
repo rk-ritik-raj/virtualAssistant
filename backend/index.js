@@ -17,27 +17,19 @@ const allowedOrigins = [
 ]
 
 app.use(cors({
-  origin: function(origin, callback){
-    if(!origin) return callback(null,true)
-    if(allowedOrigins.indexOf(origin) === -1){
-      return callback(new Error("CORS not allowed"), false)
-    }
-    return callback(null,true)
-  },
-  credentials:true,
-  methods:["GET","POST","PUT","DELETE"],
-  allowedHeaders:["Content-Type","Authorization"]
+  origin: allowedOrigins,
+  credentials: true
 }))
 
 app.use(express.json())
 app.use(cookieParser())
 
-app.use("/api/auth",authRouter)
-app.use("/api/user",userRouter)
+app.use("/api/auth", authRouter)
+app.use("/api/user", userRouter)
 
 const port = process.env.PORT || 5000
 
-app.listen(port,()=>{
+app.listen(port, () => {
   connectDb()
   console.log("server started")
 })
