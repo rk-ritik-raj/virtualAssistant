@@ -16,18 +16,12 @@ const allowedOrigins = [
   "https://virtualassistant-bjti.onrender.com"
 ]
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true)
-    } else {
-      callback(new Error("Not allowed by CORS"))
-    }
-  },
+const corsOptions = {
+  origin: allowedOrigins,
   credentials: true
-}))
+}
 
-app.options("*", cors())
+app.use(cors(corsOptions))
 
 const port = process.env.PORT || 5000
 
