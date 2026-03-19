@@ -11,13 +11,25 @@ dotenv.config()
 
 const app = express()
 
+const allowedOrigins = [
+ "http://localhost:5173",
+ "https://virtualassistant-bjti.onrender.com"
+]
+
 app.use(cors({
- origin: [
-  "http://localhost:5173",
-  "https://virtualassistant-bjti.onrender.com"
- ],
- credentials: true
+ origin: function(origin, callback){
+  if(!origin || allowedOrigins.includes(origin)){
+   callback(null,true)
+  }else{
+   callback(new Error("Not allowed by CORS"))
+  }
+ },
+ credentials:true,
+ methods:["GET","POST","PUT","DELETE"],
+ allowedHeaders:["Content-Type","Authorization"]
 }))
+
+app.options("*", cors())
 
 app.use(express.json())
 app.use(cookieParser())
@@ -27,7 +39,7 @@ app.use("/api/user", userRouter)
 
 const port = process.env.PORT || 5000
 
-app.listen(port, () => {
- connectDb()
- console.log("server started")
+app.listen(port, async () => {
+ await connectDb()
+ console.log("server started on port " + port)
 })
