@@ -12,22 +12,23 @@ dotenv.config()
 const app = express()
 
 app.use(cors({
- origin: [
-  "http://localhost:5173",
-  "https://virtualassistant-bjti.onrender.com"
- ],
- credentials: true
+ origin:true,
+ credentials:true
 }))
 
 app.use(express.json())
 app.use(cookieParser())
 
+app.get("/",(req,res)=>{
+ res.send("API running")
+})
+
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
 
-const port = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000
 
-app.listen(port, async () => {
+app.listen(PORT, async()=>{
  await connectDb()
- console.log("server started on port " + port)
+ console.log("server running")
 })
