@@ -11,17 +11,13 @@ dotenv.config()
 
 const app = express()
 
-const allowedOrigins = [
- "http://localhost:5173",
- "https://virtualassistant-bjti.onrender.com"
-]
-
 app.use(cors({
- origin: allowedOrigins,
+ origin: [
+  "http://localhost:5173",
+  "https://virtualassistant-bjti.onrender.com"
+ ],
  credentials: true
 }))
-
-app.options("/*", cors())
 
 app.use(express.json())
 app.use(cookieParser())
